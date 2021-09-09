@@ -15,7 +15,6 @@ module avg_fast_tb();
     .rs(rs),
     .ave8(out)
 	);
-   integer c ;
 	initial begin
 		// Initialize Inputs
 		clk = 0;
@@ -30,15 +29,86 @@ module avg_fast_tb();
         clk <= clk + 1;
 		#100;
 
-        clk <= clk + 1;
-		#100;
-
-        clk <= clk + 1;
-		#100;
 
         num_in <= 8'd200;
         clk <= clk + 1;
 		#100;
+	// Where is the delay
+		clk <= clk+1;
+		#100
+		
+		
+		
+		clk <= clk + 1;
+        num_in <= 8'd100;
+		#100;
+        
+        clk <= clk + 1;
+		#100;
+		
+		
+		
+		clk <= clk + 1;
+        num_in <= 8'd200;
+		#100;
+        
+        clk <= clk + 1;
+		#100;
+		
+		
+		
+		clk <= clk + 1;
+        num_in <= 8'd255;
+		#100;
+        
+        clk <= clk + 1;
+		#100;
+		
+		
+		
+		clk <= clk + 1;
+        num_in <= 8'd91;
+		#100;
+        
+        clk <= clk + 1;
+		#100;
+		
+		
+		
+		clk <= clk + 1;
+        num_in <= 8'd25;
+		#100;
+        
+        clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+        num_in <= 8'd100;
+		#100;
+        
+        clk <= clk + 1;
+		#100;
+		
+		
+		
+		clk <= clk + 1;
+        num_in <= 8'd25;
+		#100;
+        
+        clk <= clk + 1;
+		#100;
+		
+		
+		
+		clk <= clk + 1;
+        num_in <= 8'd24;
+		#100;
+        
+        clk <= clk + 1;
+		#100;
+
+
 
 
         clk <= clk + 1;
