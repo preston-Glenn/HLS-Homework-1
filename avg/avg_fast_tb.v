@@ -9,7 +9,7 @@ module avg_fast_tb();
 	wire [7:0] out;
 
 	// Instantiate the Unit Under Test (UUT)
-	avg uut (
+	avg_small uut (
     .num_in(num_in), 
     .clk(clk),
     .rs(rs),
@@ -17,7 +17,9 @@ module avg_fast_tb();
 	);
 	initial begin
 		// Initialize Inputs
-		clk = 0;
+		clk <= 0;
+		rs <= 0;
+      num_in <= 8'd100;
 		
 
 

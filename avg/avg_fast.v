@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-
+// Various combinational adder modules that take in x bits and out x+1 bit number
 module add_8_9(a,b,out);
 	input [7:0] a;
 	input [7:0] b;
@@ -34,6 +34,7 @@ module avg(
   output [7:0] ave8 ;
   reg [7:0] registers [7:0] ;
 
+	// wires that connect the adders together
   wire [8:0] a;
   wire [8:0]b;
   wire [8:0]c;
@@ -42,6 +43,7 @@ module avg(
   wire [9:0]f;
   wire [10:0]g;
 
+	// 7 adders
 	add_8_9 a_1(
 		.a(registers[0]),
 		.b(registers[1]),
@@ -86,6 +88,7 @@ module avg(
 
 	
   initial begin
+    // initialise registers to 0.
     registers[0] <= 0;
     registers[1] <= 0;
     registers[2] <= 0;
@@ -98,6 +101,7 @@ module avg(
 
   always @(posedge clk) begin
       
+		// set all registers back to 0 on reset
 		if(rs) begin
 		 registers[0] <= 0;
 		 registers[1] <= 0;
@@ -109,7 +113,7 @@ module avg(
 		 registers[7] <= 0;
       end 
     
-      
+      // shift registers
 	 registers[0] <= num_in;
     registers[1] <= registers[0];
     registers[2] <= registers[1];
@@ -121,6 +125,7 @@ module avg(
 
 
   end
+   // update output
 	assign ave8 = g[10:3];
 
 
