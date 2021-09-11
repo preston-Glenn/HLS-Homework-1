@@ -9,7 +9,7 @@ module avg_fast_tb();
 	wire [7:0] out;
 
 	// Instantiate the Unit Under Test (UUT)
-	avg uut (
+	avg_small uut (
     .num_in(num_in), 
     .clk(clk),
     .rs(rs),
@@ -25,9 +25,135 @@ module avg_fast_tb();
         clk <= clk + 1;
         num_in <= 8'd100;
 		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
         
         clk <= clk + 1;
 		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		//2
+		
+		        clk <= clk + 1;
+        num_in <= 8'd100;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+        
+        clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		
+		//3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Testing fast
+
 
 
         num_in <= 8'd200;

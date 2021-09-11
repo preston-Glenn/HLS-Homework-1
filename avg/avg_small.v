@@ -29,7 +29,7 @@ module mux8(
 	 data6,
 	 data7,
     select,
-    data_output,
+    data_output
 );
 
   parameter WIDTH = 8;
@@ -62,14 +62,21 @@ reg [WIDTH-1:0] data_bus ;
 endmodule
 
 
-module add_8_10_10(ctrl,a,b,out);
+module add_8_10_10(ctrl,rs,a,out);
 	input [2:0] ctrl;
 	input [7:0] a;
-	input [10:0] b;
-	output[10:0] out;
+	input rs;
+	output reg[10:0] out;
 	
-	always @(ctrl)
-		out <= a+b;
+	initial begin
+	out <= 0;
+	end
+	
+	always @(ctrl) begin
+		out <= a+out;
+		end
+	always@(posedge rs)
+		out <= 0;
 		
 endmodule
 
@@ -77,19 +84,21 @@ endmodule
 module avg_small(
     input clk,
     input rs,
-    output [7:0] avg8,
-    input  [7:0] in_num
+    output [7:0] ave8,
+    input  [7:0] num_in
     );
 	 
 	 reg [7:0] registers [7:0] ;
-	 reg [2:0] state = 3'd0;
-	 reg [2:0] next_state =3'd0;
-	 reg [10:0] temp_sum = 11'd0;
+	 reg [2:0] state;
+	 reg [2:0] next_state;
+	 reg [10:0] temp_sum_wire;
 	 reg [7:0] output_register;
+	 reg rs_adder;
 	 
 	 wire [7:0] a;
 	 wire [10:0] b;
 	 wire [10:0] c;
+	 wire [10:0] add_wire;
 	 
 	 mux8 muxy(    
 	 .data0(registers[0]),
@@ -99,92 +108,98 @@ module avg_small(
 	 .data4(registers[4]),
 	 .data5(registers[5]),
 	 .data6(registers[6]),
-	 .data7(in_num),
+	 .data7(num_in),
     .select(state),
-    .data_output(a),
+    .data_output(a)
 );
 	 
 	 add_8_10_10 add(
-		.ctrl(state),
+		.ctrl(next_state),
 	   .a(a),
-		.b(temp_sum),
-		.out(temp_sum)
+		.rs(rs_adder),
+		.out(temp_sum_wire)
 	 );
 	 
+	 
 	 initial begin
-		 registers[0] <= 0;
-		 registers[1] <= 0;
-		 registers[2] <= 0;
-		 registers[3] <= 0;
-		 registers[4] <= 0;
-		 registers[5] <= 0;
-		 registers[6] <= 0;
-		 registers[7] <= 0;
+		 output_register <= 7'd0;
+	 
+		 registers[0] <= 2;
+		 registers[1] <= 30;
+		 registers[2] <= 40;
+		 registers[3] <= 50;
+		 registers[4] <= 60;
+		 registers[5] <= 70;
+		 registers[6] <= 80;
+		 registers[7] <= 90;
+		 state <= 0;
+		 next_state <= 0;
 	 end
 	 
 	 
 	 
 	 always@(posedge clk) begin
+		if(state == 7 && next_state == 0) begin
+				output_register <= temp_sum_wire[10:3];
+				rs_adder <= 1;
+		end
+		state = next_state;
+		rs_adder <= 1;
+		
 		if(rs) begin
 				state <= 0;
 				//TODO -- clear registers
-				
 		end else begin
-			state <= next_state;
-		end
+	 
+			case(state)
+			0:begin
+				registers[0] <= registers[1];
+				next_state <= 1;
+			end
+			1:begin
+				registers[1] <= registers[2];
+				next_state <= 2;
+			end
+			2:begin
+				registers[2] <= registers[3];
+				next_state <= 3;
+			end
+			3:begin
+				registers[3] <= registers[4];
+				next_state <= 4;
+			end
+			4:begin
+				registers[4] <= registers[5];
+				next_state <= 5;
+			end
+			5:begin
+				registers[5] <= registers[6];
+				next_state <= 6;
+			end
+			6:begin
+				registers[6] <= registers[7];	
+				next_state <= 7;
+			end
+			7:begin
+				registers[7] <= num_in;
+				next_state <= 0;
+				
+			end
+		 
+		 endcase
+		 end
 	 end
-	 
-	 always@( state) begin
-		case(state)
-		0:begin
-			registers[0] <= registers[1];
-			next_state <= 1;
-		end
-		1:begin
-			registers[1] <= registers[2];
-			next_state <= 2;
-		end
-		2:begin
-		
-			next_state <= 3;
-		end
-		3:begin
-		
-			next_state <= 4;
-		end
-		4:begin
-		
-			next_state <= 5;
-		end
-		5:begin
-		
-			next_state <= 6;
-		end
-		6:begin
-		
-			next_state <= 7;
-		end
-		7:begin
-		
-			next_state <= 0;
-		end
-	 
-	 endcase
-	 end
-	 
+	 assign ave8 = output_register;
 	 
 endmodule
 	 
 
-	 // Things to do
-	 //
-	 //  Connect MUX to adder,
-	 //  Connect adder to temp register
-	 //  At end of the FSM set out_register to temp_sum_register
-	 //  In each state, shift register.
-	 //  Assign out_register to output
 
-// currently, the FSM is controlled by the clock so it takes 8 CC. Im not sure how 
-// how to control timing of everything without doing so. And i think it is messeg up atm.
-endmodule
+	// Things to do
+	
+	// 1. Reevaluate FSM
+	
+	// 2. Consider implementing an accumulator with a rs
+	
+	// 3. Investigate delays in Verilog.
 
