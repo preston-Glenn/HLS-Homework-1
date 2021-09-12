@@ -675,4 +675,3 @@ module avg_fast_tb();
 	end
       
 endmodule
-
