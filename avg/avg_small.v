@@ -19,21 +19,25 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 
+`include "params.v"
+    
+    
+
 module mux8(
     data0,
     data1,
     data2,
     data3,
-	 data4,
-	 data5,
-	 data6,
-	 data7,
+    data4,
+    data5,
+    data6,
+    data7,
     select,
     data_output
 );
 
   parameter WIDTH = 8;
-
+	
   input [WIDTH-1:0] data0;
   input [WIDTH-1:0] data1;
   input [WIDTH-1:0] data2;
@@ -42,44 +46,50 @@ module mux8(
   input [WIDTH-1:0] data5;
   input [WIDTH-1:0] data6;
   input [WIDTH-1:0] data7;
-  input [2:0] select;
+  input [3:0] select;
   output [WIDTH-1:0] data_output;
 
 reg [WIDTH-1:0] data_bus ;
   always @ (*) begin
     case (select)
-      0: data_bus <= data0 ;
-      1: data_bus <= data1 ;
-      2: data_bus <= data2 ;
-      3: data_bus <= data3 ;
-		4: data_bus <= data4 ;
-		5: data_bus <= data5 ;
-		6: data_bus <= data6 ;
-		7: data_bus <= data7 ;
+        state_0: data_bus <= data0 ;
+        state_1: data_bus <= data1 ;
+        state_2: data_bus <= data2 ;
+        state_3: data_bus <= data3 ;
+        state_4: data_bus <= data4 ;
+        state_5: data_bus <= data5 ;
+        state_6: data_bus <= data6 ;
+        state_7: data_bus <= data7 ;
+		  state_8: data_bus <= 0;
+		  state_9: data_bus <= 0;
     endcase
   end
   assign data_output = data_bus ;
 endmodule
 
 
-module add_8_10_10(ctrl,rs,a,out);
-	input [2:0] ctrl;
+module add_8_10_10(ctrl,clr,a,out);
+	input ctrl;
+   input clr;
 	input [7:0] a;
-	input rs;
-	output reg[10:0] out;
+	output [10:0] out;
 	
-	initial begin
-	out <= 0;
+	reg [10:0] out_hold;
+	
+// clr was negedge
+    always@(posedge ctrl or posedge clr) begin
+		 if(clr) begin
+			  out_hold <= 'b0;
+		 end else begin
+			  out_hold <= out_hold + a;
+		 end
+		 
 	end
-	
-	always @(ctrl) begin
-		out <= a+out;
-		end
-	always@(posedge rs)
-		out <= 0;
+	assign out = out_hold;
 		
 endmodule
 
+// update state numbers reset is 0, while first number is 1. This throughs off mux
 
 module avg_small(
     input clk,
@@ -89,117 +99,127 @@ module avg_small(
     );
 	 
 	 reg [7:0] registers [7:0] ;
-	 reg [2:0] state;
-	 reg [2:0] next_state;
-	 reg [10:0] temp_sum_wire;
+	 reg [3:0] state;
+	 reg [3:0] next_state ;
+
+	 wire [10:0] temp_sum_wire;
 	 reg [7:0] output_register;
-	 reg rs_adder;
 	 
 	 wire [7:0] a;
-	 wire [10:0] b;
-	 wire [10:0] c;
-	 wire [10:0] add_wire;
+	 reg clr_adder;
+
+
 	 
 	 mux8 muxy(    
-	 .data0(registers[0]),
-    .data1(registers[1]),
-    .data2(registers[2]),
-    .data3(registers[3]),
-	 .data4(registers[4]),
-	 .data5(registers[5]),
-	 .data6(registers[6]),
-	 .data7(num_in),
-    .select(state),
-    .data_output(a)
+		.data0(registers[0]),
+		.data1(registers[1]),
+		.data2(registers[2]),
+		.data3(registers[3]),
+		.data4(registers[4]),
+		.data5(registers[5]),
+		.data6(registers[6]),
+		.data7(num_in),
+		.select(state),
+		.data_output(a)
 );
 	 
 	 add_8_10_10 add(
-		.ctrl(next_state),
+		.ctrl(clk),
+      .clr(clr_adder),
 	   .a(a),
-		.rs(rs_adder),
 		.out(temp_sum_wire)
 	 );
-	 
-	 
-	 initial begin
-		 output_register <= 7'd0;
-	 
-		 registers[0] <= 2;
-		 registers[1] <= 30;
-		 registers[2] <= 40;
-		 registers[3] <= 50;
-		 registers[4] <= 60;
-		 registers[5] <= 70;
-		 registers[6] <= 80;
-		 registers[7] <= 90;
-		 state <= 0;
-		 next_state <= 0;
-	 end
-	 
-	 
-	 
-	 always@(posedge clk) begin
-		if(state == 7 && next_state == 0) begin
-				output_register <= temp_sum_wire[10:3];
-				rs_adder <= 1;
-		end
-		state = next_state;
-		rs_adder <= 1;
-		
-		if(rs) begin
-				state <= 0;
-				//TODO -- clear registers
-		end else begin
-	 
-			case(state)
-			0:begin
-				registers[0] <= registers[1];
-				next_state <= 1;
-			end
-			1:begin
-				registers[1] <= registers[2];
-				next_state <= 2;
-			end
-			2:begin
-				registers[2] <= registers[3];
-				next_state <= 3;
-			end
-			3:begin
-				registers[3] <= registers[4];
-				next_state <= 4;
-			end
-			4:begin
-				registers[4] <= registers[5];
-				next_state <= 5;
-			end
-			5:begin
-				registers[5] <= registers[6];
-				next_state <= 6;
-			end
-			6:begin
-				registers[6] <= registers[7];	
-				next_state <= 7;
-			end
-			7:begin
-				registers[7] <= num_in;
-				next_state <= 0;
-				
-			end
-		 
-		 endcase
-		 end
-	 end
-	 assign ave8 = output_register;
-	 
+
+     always@(posedge clk) begin
+         if(rs)
+            state <= state_Reset;
+        else 
+            state <= next_state;
+     end
+
+     always @(state) begin
+         case(state)
+             state_Reset: begin
+                 // make zeros
+                registers[0] <= 0;
+                registers[1] <= 0;
+                registers[2] <= 0;
+                registers[3] <= 0;
+                registers[4] <= 0;
+                registers[5] <= 0;
+                registers[6] <= 0;
+                registers[7] <= 0;
+                
+                next_state <= state_0;
+                clr_adder <= 1;
+             end
+             state_0: begin
+                registers[0] <= registers[1];
+                next_state <= state_1;
+                clr_adder <= 0;
+             end
+             state_1: begin
+                registers[1] <= registers[2];
+                next_state <= state_2;
+             end
+             state_2: begin 
+                registers[2] <= registers[3];
+                next_state <= state_3;
+             end
+				 state_3: begin 
+                registers[3] <= registers[4];
+                next_state <= state_4;
+             end
+				 state_4: begin 
+                registers[4] <= registers[5];
+                next_state <= state_5;
+             end
+				 state_5: begin 
+                registers[5] <= registers[6];
+                next_state <= state_6;
+             end
+				 state_6: begin 
+                registers[6] <= registers[7];
+                next_state <= state_7;
+             end
+				 state_7: begin 
+                registers[7] <= num_in;
+                next_state <= state_8;
+             end
+				 
+				 
+				 
+				 
+				 
+             state_8: begin // I guess what is happening here is that stage 2 sets up the numbers
+				 // to be added, then on clock we set the output_reg from temp_sum, b4 its added and
+				 // then we set clear.
+				 
+				 // clr_adder <= 1;
+				 // output_register <= temp_sum_wire[10:3];
+				 // next_state <= state_0;
+				 
+				 
+                next_state <= state_9; // state and not new_state because state is the selector for
+					 // mux and otherwise we dont add 0.
+             end
+				 state_9: begin 
+					 clr_adder <= 1;
+                output_register <= temp_sum_wire[10:3];
+                next_state <= state_0;
+             end
+             default begin
+                next_state <= state_Reset;
+                clr_adder <= 0;
+             end	 
+			endcase
+     end
+
+    assign ave8 = output_register;
+     //always @(num_in)begin
+     //end
+
 endmodule
 	 
 
-
-	// Things to do
-	
-	// 1. Reevaluate FSM
-	
-	// 2. Consider implementing an accumulator with a rs
-	
-	// 3. Investigate delays in Verilog.
 

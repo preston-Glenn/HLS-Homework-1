@@ -19,127 +19,552 @@ module avg_fast_tb();
 		// Initialize Inputs
 		clk = 0;
 		
+		
+		rs <= 1;
+		clk <= clk + 1;
+		#100;
+		rs <= 0;
+		clk <= clk + 1;
+		#100;
+		
+		// First number
+		num_in <= 8'd100;
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		
+		
+		// 2nd number
+		num_in <= 8'd20;
+		      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		
+		// third number
+		num_in <= 8'd55;
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
 
 
-		// Wait 100 ns for global reset to finish
-        clk <= clk + 1;
-        num_in <= 8'd100;
+		// fourth
+		num_in <= 8'd80;
+		clk <= clk + 1;
 		#100;
-		
 		clk <= clk + 1;
 		#100;
 		
-        
-        clk <= clk + 1;
-		#100;
 		
-		clk <= clk + 1;
+      clk <= clk + 1;
 		#100;
-		
-		clk <= clk + 1;
-		#100;
-		
-		clk <= clk + 1;
-		#100;
-		
-		clk <= clk + 1;
-		#100;
-		
 		clk <= clk + 1;
 		#100;
 		
 		
 		clk <= clk + 1;
 		#100;
-		
-		clk <= clk + 1;
-		#100;
-		
-		
-		
-		clk <= clk + 1;
-		#100;
-		
 		clk <= clk + 1;
 		#100;
 		
 		
 		clk <= clk + 1;
 		#100;
+		clk <= clk + 1;
+		#100;
 		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
 		clk <= clk + 1;
 		#100;
 		
 		
 		clk <= clk + 1;
 		#100;
-		
-		clk <= clk + 1;
-		#100;
-		//2
-		
-		        clk <= clk + 1;
-        num_in <= 8'd100;
-		#100;
-		
-		clk <= clk + 1;
-		#100;
-		
-        
-        clk <= clk + 1;
-		#100;
-		
-		clk <= clk + 1;
-		#100;
-		
-		clk <= clk + 1;
-		#100;
-		
-		clk <= clk + 1;
-		#100;
-		
-		clk <= clk + 1;
-		#100;
-		
 		clk <= clk + 1;
 		#100;
 		
 		
 		clk <= clk + 1;
 		#100;
-		
-		clk <= clk + 1;
-		#100;
-		
-		
-		
 		clk <= clk + 1;
 		#100;
 		
 		clk <= clk + 1;
 		#100;
-		
-		
-		clk <= clk + 1;
-		#100;
-		
 		clk <= clk + 1;
 		#100;
 		
 		
 		clk <= clk + 1;
 		#100;
-		
+		clk <= clk + 1;
+		#100;
+
+		// fifth
+		num_in <= 8'd70;
+		      clk <= clk + 1;
+		#100;
 		clk <= clk + 1;
 		#100;
 		
-		//3
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		// sixth
+		num_in <= 8'd120;
+		      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
 
 
-
-
-
-
+		// seventh
+		num_in <= 8'd40;
+		      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		// eighth
+		num_in <= 8'd10;
+		      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		// ninth
+		num_in <= 8'd200;
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+      clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
+		
+		
+		clk <= clk + 1;
+		#100;
+		clk <= clk + 1;
+		#100;
 
 
 
@@ -250,3 +675,4 @@ module avg_fast_tb();
 	end
       
 endmodule
+
