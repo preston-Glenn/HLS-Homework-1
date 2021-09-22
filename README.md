@@ -1,4 +1,4 @@
-# High-Level-Synthesis-Average-8
+# Verilog-Running-Average-8
 
 I created this circuit in Verilog, for my high level synthesis course. The objective of it was to create a circuit that computes the running average of last 8 8-bit numbers inputted into it. We were instructed to create two implementations of the circuit. One that used as many adders as necessary in one clock cycle, and then one that could only use one adder.
 
